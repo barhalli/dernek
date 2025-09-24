@@ -9,6 +9,15 @@ class Router
 {
     protected array $routes = [];
     protected array $globalMiddlewares = [];
+    protected string $basePath = '';
+
+    public function setBasePath(string $basePath): void
+    {
+        $this->basePath = '/' . trim($basePath, '/');
+        if ($this->basePath === '/') {
+            $this->basePath = '';
+        }
+    }
 
     public function add(string $method, string $path, array $handler, array $middlewares = []): void
     {
@@ -35,7 +44,13 @@ class Router
     public function dispatch(string $method, string $uri)
     {
         $method = strtoupper($method);
-        $uri = '/' . trim(parse_url($uri, PHP_URL_PATH), '/');
+        $path = parse_url($uri, PHP_URL_PATH) ?? '/';
+
+        if ($this->basePath !== '' && strpos($path, $this->basePath) === 0) {
+            $path = substr($path, strlen($this->basePath));
+        }
+
+        $uri = '/' . trim($path, '/');
         if ($uri === '/') {
             $uri = '/';
         }

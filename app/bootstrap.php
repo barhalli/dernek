@@ -24,4 +24,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-return new Router();
+$router = new Router();
+$router->setBasePath(dirname($_SERVER['SCRIPT_NAME'] ?? '') ?: '');
+
+return $router;
