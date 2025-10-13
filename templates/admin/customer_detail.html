@@ -63,6 +63,7 @@
           {% endfor %}
         </div>
         <form method="post" class="form-grid">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <div class="form-group form-group-full">
             <label for="content">Yeni Not</label>
             <textarea id="content" name="content" rows="3" required placeholder="Müşteri hakkında hatırlatmalarınızı ekleyin."></textarea>

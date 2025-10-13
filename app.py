@@ -1,10 +1,13 @@
+import hmac
 import os
+import secrets
 from datetime import datetime, date
 from functools import wraps
 
 from dotenv import load_dotenv
 from flask import (
     Flask,
+    abort,
     flash,
     redirect,
     render_template,
@@ -31,9 +34,24 @@ from werkzeug.security import check_password_hash, generate_password_hash
 load_dotenv()
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///dernek.db")
-SECRET_KEY = os.environ.get("SECRET_KEY", "change-this-secret")
-DEFAULT_ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
-DEFAULT_ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
+
+if not SECRET_KEY or SECRET_KEY == "change-this-secret":
+    raise RuntimeError(
+        "SECRET_KEY environment variable must be set to a strong value before starting the app."
+    )
+
+if not ADMIN_USERNAME:
+    raise RuntimeError(
+        "ADMIN_USERNAME environment variable must be configured before starting the app."
+    )
+
+if not ADMIN_PASSWORD or ADMIN_PASSWORD == "admin123" or len(ADMIN_PASSWORD) < 12:
+    raise RuntimeError(
+        "ADMIN_PASSWORD environment variable must be set to a strong value (12+ characters)."
+    )
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = SECRET_KEY
@@ -113,10 +131,10 @@ def init_db() -> None:
     try:
         # Ensure admin user exists
         try:
-            db.query(AdminUser).filter_by(username=DEFAULT_ADMIN_USERNAME).one()
+            db.query(AdminUser).filter_by(username=ADMIN_USERNAME).one()
         except NoResultFound:
-            admin = AdminUser(username=DEFAULT_ADMIN_USERNAME)
-            admin.set_password(DEFAULT_ADMIN_PASSWORD)
+            admin = AdminUser(username=ADMIN_USERNAME)
+            admin.set_password(ADMIN_PASSWORD)
             db.add(admin)
 
         # Seed example products
@@ -153,6 +171,21 @@ def get_db_session():
         yield db
     finally:
         db.close()
+
+
+def generate_csrf_token() -> str:
+    token = session.get("_csrf_token")
+    if not token:
+        token = secrets.token_urlsafe(32)
+        session["_csrf_token"] = token
+    return token
+
+
+def validate_csrf_token() -> None:
+    session_token = session.get("_csrf_token")
+    form_token = request.form.get("csrf_token", "")
+    if not session_token or not form_token or not hmac.compare_digest(session_token, form_token):
+        abort(400, description="Invalid or missing CSRF token.")
 
 
 def login_required(view):
@@ -230,6 +263,7 @@ def thank_you():
 @app.route("/admin/login", methods=["GET", "POST"])
 def admin_login():
     if request.method == "POST":
+        validate_csrf_token()
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
         db = SessionLocal()
@@ -237,6 +271,7 @@ def admin_login():
             user = db.query(AdminUser).filter_by(username=username).one_or_none()
             if user and user.check_password(password):
                 session["admin_user"] = user.username
+                session["_csrf_token"] = secrets.token_urlsafe(32)
                 flash("Hoş geldiniz!", "success")
                 return redirect(url_for("admin_dashboard"))
             flash("Kullanıcı adı veya şifre hatalı.", "danger")
@@ -248,6 +283,7 @@ def admin_login():
 @app.route("/admin/logout")
 def admin_logout():
     session.pop("admin_user", None)
+    session.pop("_csrf_token", None)
     flash("Güvenli çıkış yapıldı.", "info")
     return redirect(url_for("admin_login"))
 
@@ -313,6 +349,7 @@ def admin_customer_detail(customer_id):
             return redirect(url_for("admin_customers"))
 
         if request.method == "POST":
+            validate_csrf_token()
             content = request.form.get("content", "").strip()
             if content:
                 note = CustomerNote(customer=customer, content=content)
@@ -351,6 +388,7 @@ def admin_orders():
     db = SessionLocal()
     try:
         if request.method == "POST":
+            validate_csrf_token()
             order_id = int(request.form.get("order_id"))
             status = request.form.get("status", "pending")
             order = db.get(Order, order_id)
@@ -374,7 +412,10 @@ def admin_orders():
 
 @app.context_processor
 def inject_now():
-    return {"current_year": datetime.utcnow().year}
+    return {
+        "current_year": datetime.utcnow().year,
+        "csrf_token": generate_csrf_token,
+    }
 
 
 if __name__ == "__main__":

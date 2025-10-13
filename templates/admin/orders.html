@@ -37,6 +37,7 @@
                 <td>{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
                 <td>
                   <form method="post" class="inline-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="order_id" value="{{ order.id }}">
                     <select name="status">
                       {% for choice in ['pending', 'paid', 'completed', 'cancelled'] %}
