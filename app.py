@@ -3,6 +3,7 @@ import os
 import secrets
 from datetime import datetime, date
 from functools import wraps
+from typing import Optional, Tuple
 
 from dotenv import load_dotenv
 from flask import (
@@ -34,24 +35,40 @@ from werkzeug.security import check_password_hash, generate_password_hash
 load_dotenv()
 
 DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///dernek.db")
-SECRET_KEY = os.environ.get("SECRET_KEY")
-ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME")
-ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
 
-if not SECRET_KEY or SECRET_KEY == "change-this-secret":
-    raise RuntimeError(
-        "SECRET_KEY environment variable must be set to a strong value before starting the app."
-    )
 
-if not ADMIN_USERNAME:
-    raise RuntimeError(
-        "ADMIN_USERNAME environment variable must be configured before starting the app."
-    )
+def require_env(
+    name: str,
+    *,
+    min_length: Optional[int] = None,
+    disallowed_values: Tuple[str, ...] = (),
+) -> str:
+    """Fetch a required environment variable and enforce basic security constraints."""
 
-if not ADMIN_PASSWORD or ADMIN_PASSWORD == "admin123" or len(ADMIN_PASSWORD) < 12:
-    raise RuntimeError(
-        "ADMIN_PASSWORD environment variable must be set to a strong value (12+ characters)."
-    )
+    raw_value = os.environ.get(name, "")
+    value = raw_value.strip()
+    if not value:
+        raise RuntimeError(
+            f"{name} environment variable must be configured before starting the app."
+        )
+
+    for disallowed in disallowed_values:
+        if disallowed and hmac.compare_digest(value, disallowed):
+            raise RuntimeError(
+                f"{name} environment variable cannot use the insecure default value."
+            )
+
+    if min_length is not None and len(value) < min_length:
+        raise RuntimeError(
+            f"{name} environment variable must be at least {min_length} characters long."
+        )
+
+    return value
+
+
+SECRET_KEY = require_env("SECRET_KEY", min_length=16, disallowed_values=("change-this-secret",))
+ADMIN_USERNAME = require_env("ADMIN_USERNAME", min_length=3)
+ADMIN_PASSWORD = require_env("ADMIN_PASSWORD", min_length=12, disallowed_values=("admin123",))
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = SECRET_KEY
@@ -188,6 +205,16 @@ def validate_csrf_token() -> None:
         abort(400, description="Invalid or missing CSRF token.")
 
 
+def csrf_protect(view):
+    @wraps(view)
+    def wrapped_view(*args, **kwargs):
+        if request.method == "POST":
+            validate_csrf_token()
+        return view(*args, **kwargs)
+
+    return wrapped_view
+
+
 def login_required(view):
     @wraps(view)
     def wrapped_view(**kwargs):
@@ -261,9 +288,9 @@ def thank_you():
 
 
 @app.route("/admin/login", methods=["GET", "POST"])
+@csrf_protect
 def admin_login():
     if request.method == "POST":
-        validate_csrf_token()
         username = request.form.get("username", "").strip()
         password = request.form.get("password", "")
         db = SessionLocal()
@@ -340,6 +367,7 @@ def admin_customers():
 
 @app.route("/admin/customers/<int:customer_id>", methods=["GET", "POST"])
 @login_required
+@csrf_protect
 def admin_customer_detail(customer_id):
     db = SessionLocal()
     try:
@@ -349,7 +377,6 @@ def admin_customer_detail(customer_id):
             return redirect(url_for("admin_customers"))
 
         if request.method == "POST":
-            validate_csrf_token()
             content = request.form.get("content", "").strip()
             if content:
                 note = CustomerNote(customer=customer, content=content)
@@ -384,11 +411,11 @@ def admin_customer_detail(customer_id):
 
 @app.route("/admin/orders", methods=["GET", "POST"])
 @login_required
+@csrf_protect
 def admin_orders():
     db = SessionLocal()
     try:
         if request.method == "POST":
-            validate_csrf_token()
             order_id = int(request.form.get("order_id"))
             status = request.form.get("status", "pending")
             order = db.get(Order, order_id)
