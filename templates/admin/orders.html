@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}Siparişler | Dernek Dijital{% endblock %}
+
+{% block content %}
+<section class="section admin-section">
+  <div class="container">
+    <div class="admin-header">
+      <h1>Siparişler</h1>
+      <a href="{{ url_for('admin_dashboard') }}" class="button button-outline">← Dashboard</a>
+    </div>
+
+    <div class="panel">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Müşteri</th>
+              <th>Ürün</th>
+              <th>Tutar</th>
+              <th>Durum</th>
+              <th>Tarih</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+              <tr>
+                <td>{{ order.id }}</td>
+                <td><a href="{{ url_for('admin_customer_detail', customer_id=order.customer.id) }}">{{ order.customer.full_name }}</a></td>
+                <td>{{ order.product.name }}</td>
+                <td>{{ "%.2f" | format(order.amount) }} ₺</td>
+                <td>
+                  <span class="status status-{{ order.status }}">{{ order.status|capitalize }}</span>
+                </td>
+                <td>{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                <td>
+                  <form method="post" class="inline-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="order_id" value="{{ order.id }}">
+                    <select name="status">
+                      {% for choice in ['pending', 'paid', 'completed', 'cancelled'] %}
+                        <option value="{{ choice }}" {% if order.status == choice %}selected{% endif %}>{{ choice|capitalize }}</option>
+                      {% endfor %}
+                    </select>
+                    <button type="submit" class="button button-small button-secondary">Kaydet</button>
+                  </form>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="7" class="empty">Henüz sipariş bulunmuyor.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

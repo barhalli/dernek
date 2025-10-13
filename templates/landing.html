@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+
+{% block title %}Dernek Dijital | Dijital Ürün Satış Platformu{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <h1>Dijital ürünlerinizi profesyonelce satın. Müşterilerinizi tek panelden yönetin.</h1>
+      <p>Dernek Dijital ile ürün katalogunuzu sergileyin, satış talebi toplayın ve CRM sistemi sayesinde müşterilerinizin durumunu takip edin.</p>
+      <div class="hero-actions">
+        <a href="{{ url_for('start_order') }}" class="button button-primary">Satın Almaya Başla</a>
+        <a href="https://wa.me/900000000000" target="_blank" rel="noopener" class="button button-outline">WhatsApp İletişimi</a>
+      </div>
+      <div class="trust-indicators">
+        <div>
+          <strong>7/24</strong>
+          <span>Destek</span>
+        </div>
+        <div>
+          <strong>100+</strong>
+          <span>Mutlu Müşteri</span>
+        </div>
+        <div>
+          <strong>99%</strong>
+          <span>Memnuniyet</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h2>Satış istatistiklerinizi takip edin</h2>
+      <ul>
+        <li>Günlük satış grafiği</li>
+        <li>Aktif müşteri durumu</li>
+        <li>Ödeme takibi</li>
+      </ul>
+      <p class="hero-card-note">Admin paneli sayesinde tüm siparişlerinizi tek ekrandan yönetin.</p>
+    </div>
+  </div>
+</section>
+
+<section id="products" class="section">
+  <div class="container">
+    <h2>Popüler Dijital Ürünler</h2>
+    <div class="product-grid">
+      {% for product in products %}
+        <article class="product-card">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <div class="product-footer">
+            <span class="price">{{ "%.2f" | format(product.price) }} ₺</span>
+            <a href="{{ url_for('start_order') }}?product_id={{ product.id }}" class="button button-secondary">Satın Al</a>
+          </div>
+        </article>
+      {% else %}
+        <p>Şu anda listelenecek ürün bulunmuyor. Lütfen daha sonra tekrar ziyaret edin.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="features" class="section section-muted">
+  <div class="container feature-grid">
+    <div>
+      <h2>Satış ve CRM'i Tek Panelden Yönetin</h2>
+      <p>Admin paneli ile satış, müşteri ve ödeme süreçlerini tek yerden takip edin. Notlar alın, durum atayın, iletişimi hızlandırın.</p>
+      <ul class="feature-list">
+        <li>Detaylı müşteri profili ve sipariş geçmişi</li>
+        <li>Satış durumu takibi ve notlandırma</li>
+        <li>WhatsApp & e-posta entegrasyonu</li>
+        <li>SEO uyumlu altyapı</li>
+      </ul>
+    </div>
+    <div class="feature-card">
+      <h3>Kurumsal Görünüm</h3>
+      <p>Mobil uyumlu, sade ve profesyonel tasarım sayesinde müşterilerinize güven verin.</p>
+      <p><strong>Hosting kurulumu</strong> ve <strong>domain bağlantısı</strong> tarafımızca yapılır.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container cta-card">
+    <div>
+      <h2>Dijital satış operasyonunuzu güçlendirin</h2>
+      <p>Satın alma taleplerini toplayın, müşteri notları girin ve satış performansınızı günlük olarak takip edin.</p>
+    </div>
+    <div>
+      <a href="{{ url_for('start_order') }}" class="button button-primary">Şimdi Başlayın</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

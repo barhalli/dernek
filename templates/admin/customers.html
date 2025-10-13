@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}Müşteriler | Dernek Dijital{% endblock %}
+
+{% block content %}
+<section class="section admin-section">
+  <div class="container">
+    <div class="admin-header">
+      <h1>Müşteriler</h1>
+      <a href="{{ url_for('admin_dashboard') }}" class="button button-outline">← Dashboard</a>
+    </div>
+
+    <div class="panel">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Ad Soyad</th>
+              <th>E-posta</th>
+              <th>Telefon</th>
+              <th>Oluşturulma</th>
+              <th>Sipariş Sayısı</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for customer in customers %}
+              <tr>
+                <td>{{ customer.full_name }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phone or '-' }}</td>
+                <td>{{ customer.created_at.strftime('%d.%m.%Y') }}</td>
+                <td>{{ customer.orders|length }}</td>
+                <td class="text-right">
+                  <a href="{{ url_for('admin_customer_detail', customer_id=customer.id) }}" class="button button-secondary button-small">Detay</a>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="6" class="empty">Henüz müşteri kaydı bulunmuyor.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
