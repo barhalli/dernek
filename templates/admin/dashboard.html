@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+
+{% block title %}Admin Paneli | Dernek Dijital{% endblock %}
+
+{% block content %}
+<section class="section admin-section">
+  <div class="container">
+    <div class="admin-header">
+      <h1>Genel Bakış</h1>
+      <div>
+        <a href="{{ url_for('admin_orders') }}" class="button button-secondary">Siparişler</a>
+        <a href="{{ url_for('admin_customers') }}" class="button button-outline">Müşteriler</a>
+        <a href="{{ url_for('admin_logout') }}" class="button button-outline">Çıkış Yap</a>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Toplam Gelir</span>
+        <strong class="stat-value">{{ "%.2f" | format(total_revenue) }} ₺</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Toplam Sipariş</span>
+        <strong class="stat-value">{{ total_orders }}</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Bugünkü Talep</span>
+        <strong class="stat-value">{{ daily_orders }}</strong>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Aktif Müşteri</span>
+        <strong class="stat-value">{{ active_customers }}</strong>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <h2>Son Siparişler</h2>
+        <a href="{{ url_for('admin_orders') }}">Tümünü Gör</a>
+      </div>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Müşteri</th>
+              <th>Ürün</th>
+              <th>Tutar</th>
+              <th>Durum</th>
+              <th>Tarih</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in recent_orders %}
+              <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.customer.full_name }}</td>
+                <td>{{ order.product.name }}</td>
+                <td>{{ "%.2f" | format(order.amount) }} ₺</td>
+                <td><span class="status status-{{ order.status }}">{{ order.status|capitalize }}</span></td>
+                <td>{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="6" class="empty">Henüz sipariş bulunmuyor.</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

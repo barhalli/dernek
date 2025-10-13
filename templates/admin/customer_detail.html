@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ customer.full_name }} | Dernek Dijital{% endblock %}
+
+{% block content %}
+<section class="section admin-section">
+  <div class="container">
+    <div class="admin-header">
+      <div>
+        <a href="{{ url_for('admin_customers') }}" class="button button-outline">← Geri</a>
+        <h1>{{ customer.full_name }}</h1>
+        <p class="muted">{{ customer.email }} {% if customer.phone %}• {{ customer.phone }}{% endif %}</p>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Sipariş Geçmişi</h2>
+        </div>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Ürün</th>
+                <th>Tutar</th>
+                <th>Durum</th>
+                <th>Tarih</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders %}
+                <tr>
+                  <td>{{ order.id }}</td>
+                  <td>{{ order.product.name }}</td>
+                  <td>{{ "%.2f" | format(order.amount) }} ₺</td>
+                  <td><span class="status status-{{ order.status }}">{{ order.status|capitalize }}</span></td>
+                  <td>{{ order.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="5" class="empty">Bu müşteriye ait sipariş bulunmuyor.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <h2>Notlar</h2>
+        </div>
+        <div class="note-list">
+          {% for note in notes %}
+            <article class="note-item">
+              <time>{{ note.created_at.strftime('%d.%m.%Y %H:%M') }}</time>
+              <p>{{ note.content }}</p>
+            </article>
+          {% else %}
+            <p class="empty">Henüz not eklenmemiş.</p>
+          {% endfor %}
+        </div>
+        <form method="post" class="form-grid">
+          <div class="form-group form-group-full">
+            <label for="content">Yeni Not</label>
+            <textarea id="content" name="content" rows="3" required placeholder="Müşteri hakkında hatırlatmalarınızı ekleyin."></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="button button-primary">Not Ekle</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

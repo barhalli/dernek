@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block title %}Teşekkürler | Dernek Dijital{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container form-card">
+    <h1>Teşekkürler!</h1>
+    <p class="section-intro">Talebiniz bize ulaştı. Satış danışmanlarımız en kısa sürede sizinle iletişime geçecek.</p>
+    <a href="{{ url_for('landing') }}" class="button button-secondary">Ana sayfaya dön</a>
+  </div>
+</section>
+{% endblock %}
