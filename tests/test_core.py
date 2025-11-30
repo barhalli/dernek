@@ -15,10 +15,34 @@ from calculator import calculate, list_operations
         ("bol", [20, 2, 5], 2.0),
         ("üs", [2, 3], 8.0),
         ("mod", [10, 3], 1.0),
+        ("karekök", [16], 4.0),
+        ("sqrt", [9], 3.0),
+        ("faktöriyel", [5], 120.0),
+        ("factorial", [3], 6.0),
+        ("ortalama", [2, 4, 6], 4.0),
+        ("average", [10, 20], 15.0),
     ],
 )
 def test_calculate_success(operation, values, expected):
     assert math.isclose(calculate(operation, values), expected)
+
+
+def test_sqrt_negative():
+    with pytest.raises(ValueError) as excinfo:
+        calculate("karekok", [-1])
+    assert "Negatif sayıların karekökü alınamaz" in str(excinfo.value)
+
+
+def test_factorial_negative():
+    with pytest.raises(ValueError) as excinfo:
+        calculate("faktoriyel", [-1])
+    assert "Negatif sayıların faktöriyeli alınamaz" in str(excinfo.value)
+
+
+def test_factorial_non_integer():
+    with pytest.raises(ValueError) as excinfo:
+        calculate("faktoriyel", [1.5])
+    assert "Faktöriyel işlemi için tam sayı gereklidir" in str(excinfo.value)
 
 
 def test_calculate_invalid_operation():
@@ -53,4 +77,14 @@ def test_argument_count_validation(operation, values, message):
 def test_list_operations_returns_canonical_names():
     operations = list_operations()
     names = [name for name, _ in operations]
-    assert names == ["topla", "çıkar", "çarp", "böl", "üs", "mod"]
+    assert names == [
+        "topla",
+        "çıkar",
+        "çarp",
+        "böl",
+        "üs",
+        "mod",
+        "karekök",
+        "faktöriyel",
+        "ortalama",
+    ]

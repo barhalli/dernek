@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from functools import reduce
 from typing import Callable, Iterable, Mapping, Sequence
@@ -71,6 +72,28 @@ def _modulo(values: Sequence[Number]) -> Number:
     return float(dividend % divisor)
 
 
+def _sqrt(values: Sequence[Number]) -> Number:
+    value = values[0]
+    if value < 0:
+        raise ValueError("Negatif sayıların karekökü alınamaz.")  # noqa: TRY003
+    return math.sqrt(value)
+
+
+def _factorial(values: Sequence[Number]) -> Number:
+    value = values[0]
+    if value < 0:
+        raise ValueError("Negatif sayıların faktöriyeli alınamaz.")  # noqa: TRY003
+    if value % 1 != 0:
+        raise ValueError("Faktöriyel işlemi için tam sayı gereklidir.")  # noqa: TRY003
+    return float(math.factorial(int(value)))
+
+
+def _average(values: Sequence[Number]) -> Number:
+    if not values:
+        return 0.0
+    return sum(values) / len(values)
+
+
 def _register_operations() -> tuple[Mapping[str, Operation], tuple[str, ...]]:
     operations: dict[str, Operation] = {}
     canonical_names: list[str] = []
@@ -138,6 +161,36 @@ def _register_operations() -> tuple[Mapping[str, Operation], tuple[str, ...]]:
             max_args=2,
             description="İlk sayının ikinci sayıya bölümünden kalanını bulur.",
             aliases=("modulo",),
+        ),
+    )
+    register(
+        "karekök",
+        Operation(
+            func=_sqrt,
+            min_args=1,
+            max_args=1,
+            description="Sayının karekökünü alır.",
+            aliases=("karekok", "sqrt", "square_root"),
+        ),
+    )
+    register(
+        "faktöriyel",
+        Operation(
+            func=_factorial,
+            min_args=1,
+            max_args=1,
+            description="Sayının faktöriyelini hesaplar.",
+            aliases=("faktoriyel", "factorial"),
+        ),
+    )
+    register(
+        "ortalama",
+        Operation(
+            func=_average,
+            min_args=1,
+            max_args=None,
+            description="Girilen sayıların ortalamasını alır.",
+            aliases=("average", "mean"),
         ),
     )
 
