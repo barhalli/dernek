@@ -6,7 +6,7 @@ Bootstrap 5 ile tasarlanmış, paylaşımlı hosting uyumlu ve phpMyAdmin/MySQL 
 1. `config/config.example.php` dosyasını `config/config.php` olarak kopyalayın ve veritabanı bilgilerinizi girin.
    - Yönetim paneli için varsayılan bilgiler `admin/changeme123` şeklindedir; yayına almadan önce `config.php` içinde güncelleyin.
 2. phpMyAdmin ya da MySQL istemcisiyle `schema.sql` dosyasını içeri aktarın.
-3. Dosyaları paylaşımlı hosting ortamının web köküne yükleyin.
+3. Dosyaları paylaşımlı hosting ortamının web köküne veya bir alt klasöre yükleyin; uygulama bulunduğu klasörü otomatik algılayıp bağlantıları buna göre üretir.
 4. Tarayıcıdan sitenizi açın; veritabanı yoksa sayfa içeriği otomatik olarak örnek verilerle doldurulur.
 
 ## Sayfalar
@@ -31,5 +31,5 @@ Bootstrap 5 ile tasarlanmış, paylaşımlı hosting uyumlu ve phpMyAdmin/MySQL 
 - Zorunlu sayfaların varlığını ve PHP sözdizimini birlikte doğrulayan denetim: `./scripts/site_audit.sh`
 
 ## Yönetim Paneli
-- `/admin/login.php` adresinden giriş yaparak istatistik, program, etkinlik, haber, referans ve iş ortağı kayıtlarını yönetebilirsiniz.
+- `/admin/login.php` adresinden (yüklediğiniz klasör altında) giriş yaparak istatistik, program, etkinlik, haber, referans ve iş ortağı kayıtlarını yönetebilirsiniz.
 - İletişim ve bağış formlarından gelen kayıtlar **Form Kayıtları** sekmesinde listelenir.

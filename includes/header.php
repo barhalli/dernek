@@ -17,7 +17,7 @@
 </div>
 <header class="navbar navbar-expand-lg navbar-light main-nav shadow-sm">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center fw-bold" href="/">
+        <a class="navbar-brand d-flex align-items-center fw-bold" href="<?= url_for(''); ?>">
             <span class="brand-mark me-2"><i class="fa-solid fa-hand-holding-heart"></i></span>
             DernekWeb
         </a>
@@ -26,13 +26,13 @@
         </button>
         <div class="collapse navbar-collapse" id="mainNav">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-2">
-                <li class="nav-item"><a class="nav-link" href="/">ANA SAYFA</a></li>
-                <li class="nav-item"><a class="nav-link" href="about.php">HAKKIMIZDA</a></li>
-                <li class="nav-item"><a class="nav-link" href="events.php">ETKİNLİKLER</a></li>
-                <li class="nav-item"><a class="nav-link" href="news.php">HABERLER</a></li>
-                <li class="nav-item"><a class="nav-link" href="donate.php">BAĞIŞ</a></li>
-                <li class="nav-item"><a class="nav-link" href="contact.php">İLETİŞİM</a></li>
-                <li class="nav-item"><a class="btn btn-primary nav-cta" href="<?= sanitize($settings['hero_primary_link'] ?? 'donate.php'); ?>"><?= sanitize($settings['hero_primary_cta'] ?? 'Hızlı Bağış'); ?></a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= url_for(''); ?>">ANA SAYFA</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= url_for('about.php'); ?>">HAKKIMIZDA</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= url_for('events.php'); ?>">ETKİNLİKLER</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= url_for('news.php'); ?>">HABERLER</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= url_for('donate.php'); ?>">BAĞIŞ</a></li>
+                <li class="nav-item"><a class="nav-link" href="<?= url_for('contact.php'); ?>">İLETİŞİM</a></li>
+                <li class="nav-item"><a class="btn btn-primary nav-cta" href="<?= sanitize($settings['hero_primary_link'] ?? url_for('donate.php')); ?>"><?= sanitize($settings['hero_primary_cta'] ?? 'Hızlı Bağış'); ?></a></li>
             </ul>
         </div>
     </div>

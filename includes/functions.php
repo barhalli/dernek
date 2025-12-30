@@ -22,6 +22,46 @@ function load_data(?PDO $pdo = null): array
     }
 }
 
+function app_base_path(): string
+{
+    static $basePath;
+
+    if ($basePath !== null) {
+        return $basePath;
+    }
+
+    $documentRoot = rtrim($_SERVER['DOCUMENT_ROOT'] ?? '', '/');
+    $projectRoot = realpath(__DIR__ . '/..');
+
+    if ($documentRoot && $projectRoot && str_starts_with($projectRoot, $documentRoot)) {
+        $relative = trim(str_replace($documentRoot, '', $projectRoot), '/');
+        $basePath = $relative ? '/' . $relative : '';
+        return $basePath;
+    }
+
+    $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+    $segments = explode('/', trim($scriptName, '/'));
+    if (count($segments) > 1) {
+        $basePath = '/' . $segments[0];
+        return $basePath;
+    }
+
+    $basePath = '';
+    return $basePath;
+}
+
+function url_for(string $path = ''): string
+{
+    $base = rtrim(app_base_path(), '/');
+    $cleanPath = ltrim($path, '/');
+
+    if ($cleanPath === '') {
+        return $base === '' ? '/' : $base . '/';
+    }
+
+    return ($base === '' ? '' : $base) . '/' . $cleanPath;
+}
+
 function fetch_settings(PDO $pdo): array
 {
     $stmt = $pdo->query('SELECT setting_key, setting_value FROM site_settings');

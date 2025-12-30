@@ -30,18 +30,18 @@ require_login();
             <strong>DernekWeb Admin</strong>
         </div>
         <nav class="nav flex-column gap-1">
-            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'dashboard') ? ' active' : ''; ?>" href="/admin/dashboard.php"><i class="fa-solid fa-gauge me-2"></i>Kontrol Paneli</a>
-            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'stats') ? ' active' : ''; ?>" href="/admin/stats.php"><i class="fa-solid fa-chart-column me-2"></i>İstatistikler</a>
-            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'programs') ? ' active' : ''; ?>" href="/admin/programs.php"><i class="fa-solid fa-layer-group me-2"></i>Programlar</a>
-            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'events') ? ' active' : ''; ?>" href="/admin/events.php"><i class="fa-solid fa-calendar-days me-2"></i>Etkinlikler</a>
-            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'news') ? ' active' : ''; ?>" href="/admin/news.php"><i class="fa-solid fa-newspaper me-2"></i>Haberler</a>
-            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'testimonials') ? ' active' : ''; ?>" href="/admin/testimonials.php"><i class="fa-solid fa-comments me-2"></i>Referanslar</a>
-            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'partners') ? ' active' : ''; ?>" href="/admin/partners.php"><i class="fa-solid fa-handshake me-2"></i>İş Ortakları</a>
-            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'messages') ? ' active' : ''; ?>" href="/admin/messages.php"><i class="fa-solid fa-envelope-open-text me-2"></i>Form Kayıtları</a>
-            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'settings') ? ' active' : ''; ?>" href="/admin/settings.php"><i class="fa-solid fa-gear me-2"></i>Site Ayarları</a>
+            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'dashboard') ? ' active' : ''; ?>" href="<?= url_for('admin/dashboard.php'); ?>"><i class="fa-solid fa-gauge me-2"></i>Kontrol Paneli</a>
+            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'stats') ? ' active' : ''; ?>" href="<?= url_for('admin/stats.php'); ?>"><i class="fa-solid fa-chart-column me-2"></i>İstatistikler</a>
+            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'programs') ? ' active' : ''; ?>" href="<?= url_for('admin/programs.php'); ?>"><i class="fa-solid fa-layer-group me-2"></i>Programlar</a>
+            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'events') ? ' active' : ''; ?>" href="<?= url_for('admin/events.php'); ?>"><i class="fa-solid fa-calendar-days me-2"></i>Etkinlikler</a>
+            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'news') ? ' active' : ''; ?>" href="<?= url_for('admin/news.php'); ?>"><i class="fa-solid fa-newspaper me-2"></i>Haberler</a>
+            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'testimonials') ? ' active' : ''; ?>" href="<?= url_for('admin/testimonials.php'); ?>"><i class="fa-solid fa-comments me-2"></i>Referanslar</a>
+            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'partners') ? ' active' : ''; ?>" href="<?= url_for('admin/partners.php'); ?>"><i class="fa-solid fa-handshake me-2"></i>İş Ortakları</a>
+            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'messages') ? ' active' : ''; ?>" href="<?= url_for('admin/messages.php'); ?>"><i class="fa-solid fa-envelope-open-text me-2"></i>Form Kayıtları</a>
+            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'settings') ? ' active' : ''; ?>" href="<?= url_for('admin/settings.php'); ?>"><i class="fa-solid fa-gear me-2"></i>Site Ayarları</a>
         </nav>
         <div class="mt-auto">
-            <a class="btn btn-outline-light w-100" href="/admin/logout.php"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Çıkış Yap</a>
+            <a class="btn btn-outline-light w-100" href="<?= url_for('admin/logout.php'); ?>"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Çıkış Yap</a>
         </div>
     </aside>
     <div class="flex-grow-1">

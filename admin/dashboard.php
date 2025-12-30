@@ -19,7 +19,7 @@ if ($pdo) {
         <h1 class="h4 mb-1">Kontrol Paneli</h1>
         <p class="text-muted mb-0">Site istatistiklerini ve formları yönetin.</p>
     </div>
-    <a class="btn btn-primary" href="/index.php" target="_blank"><i class="fa-solid fa-up-right-from-square me-2"></i>Siteyi Aç</a>
+    <a class="btn btn-primary" href="<?= url_for('index.php'); ?>" target="_blank"><i class="fa-solid fa-up-right-from-square me-2"></i>Siteyi Aç</a>
 </div>
 <div class="row g-3 mb-4">
     <div class="col-md-3">
