@@ -7,57 +7,51 @@ $pageTitle = 'DernekWeb | Toplumsal Dayanışma Platformu';
 include __DIR__ . '/includes/head.php';
 include __DIR__ . '/includes/header.php';
 ?>
-<section class="hero py-5 py-lg-6 position-relative">
-    <div class="container position-relative z-1">
+<section class="hero-modern">
+    <div class="container">
         <div class="row align-items-center g-4">
-            <div class="col-lg-7">
-                <span class="badge rounded-pill mb-3">Paylaşımlı hosting uyumlu · Güvenli · Hızlı</span>
-                <h1 class="display-4 fw-bold mb-3">Dayanışma için <span class="text-warning">sürdürülebilir</span> bir dijital merkez</h1>
-                <p class="lead text-white-50 mb-4">DernekWeb; gönüllü yönetimi, bağış süreçleri ve etkinlik takibini tek platformda buluşturan, mobil uyumlu ve veritabanı destekli bir kurumsal web sitesidir.</p>
+            <div class="col-lg-6">
+                <div class="hero-tag mb-3"><i class="fa-solid fa-rocket"></i> Dernek Yazılım · Paylaşımlı hosting hazır</div>
+                <h1 class="display-5 fw-bold mb-3">Güçlü bir dernek sitesi ile <span class="text-warning">daha çok insana</span> ulaşın</h1>
+                <p class="lead text-white-75 mb-3">Tüm sayfaları yönetim panelinden düzenleyebileceğiniz modern, veritabanı destekli ve mobil uyumlu dernek altyapısı.</p>
+                <ul class="list-unstyled hero-list text-white-75 mb-4">
+                    <li><i class="fa-solid fa-circle-check me-2 text-warning"></i>MySQL + phpMyAdmin şeması ve örnek veriler</li>
+                    <li><i class="fa-solid fa-circle-check me-2 text-warning"></i>Program, etkinlik, haber ve bağış kayıtları hazır</li>
+                    <li><i class="fa-solid fa-circle-check me-2 text-warning"></i>Bootstrap 5 ve Font Awesome (jsDelivr) ile hızlı yükleme</li>
+                </ul>
                 <div class="d-flex flex-wrap gap-3">
-                    <a class="btn btn-warning btn-lg fw-semibold px-4" href="donate.php">Bağış Yap</a>
-                    <a class="btn btn-outline-light btn-lg fw-semibold px-4" href="contact.php">İletişime Geç</a>
+                    <a class="btn btn-light text-primary fw-semibold px-4" href="donate.php">Bağış Yap</a>
+                    <a class="btn btn-outline-light fw-semibold px-4" href="contact.php">İletişime Geç</a>
                 </div>
-                <div class="d-flex flex-wrap gap-3 mt-4 text-white-50 small">
-                    <span><i class="fa-solid fa-database me-2"></i>MySQL + phpMyAdmin hazır</span>
-                    <span><i class="fa-solid fa-shield-halved me-2"></i>Paylaşımlı hosting uyumlu</span>
-                    <span><i class="fa-solid fa-mobile-screen me-2"></i>Mobil odaklı tasarım</span>
+                <div class="mini-stats">
+                    <?php foreach (array_slice($siteData['stats'], 0, 4) as $stat): ?>
+                        <div class="mini-stat">
+                            <div class="small text-white-50"><?= $stat['label']; ?></div>
+                            <div class="fw-bold fs-5"><?= $stat['value']; ?></div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
-            <div class="col-lg-5">
-                <div class="card shadow-lg border-0 rounded-4">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center mb-3">
-                            <div class="icon-circle me-3"><i class="fa-solid fa-gauge-high"></i></div>
-                            <div>
-                                <div class="fw-semibold">Hızlı kurulum</div>
-                                <small class="text-muted">config.php ile dakikalar içinde aktif</small>
-                            </div>
-                        </div>
-                        <ul class="list-unstyled mb-0 text-muted small">
-                            <li class="mb-2"><i class="fa-solid fa-check text-primary me-2"></i>Bootstrap 5.3 & Font Awesome (jsDelivr)</li>
-                            <li class="mb-2"><i class="fa-solid fa-check text-primary me-2"></i>SEO başlık ve meta ayarları</li>
-                            <li class="mb-2"><i class="fa-solid fa-check text-primary me-2"></i>Örnek SQL şeması ve sahte veriler</li>
-                            <li class="mb-2"><i class="fa-solid fa-check text-primary me-2"></i>Temiz PHP + PDO veri erişimi</li>
-                        </ul>
-                    </div>
+            <div class="col-lg-6">
+                <div class="hero-figure">
+                    <img class="w-100" src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1400&q=80" alt="Dernek paneli">
                 </div>
             </div>
         </div>
     </div>
-    <svg class="hero-curve" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill="#f8fafc" d="M0,64L80,64C160,64,320,64,480,85.3C640,107,800,149,960,160C1120,171,1280,149,1360,138.7L1440,128L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"></path>
-    </svg>
 </section>
 
-<section class="py-5">
+<section class="stat-strip">
     <div class="container">
         <div class="row g-4">
-            <?php foreach ($siteData['stats'] as $stat): ?>
+            <?php foreach (array_slice($siteData['stats'], 0, 4) as $stat): ?>
                 <div class="col-6 col-md-3">
-                    <div class="stat-card text-center card-hover">
-                        <div class="stat-value mb-2"><?= $stat['value']; ?></div>
-                        <div class="text-muted fw-semibold"><?= $stat['label']; ?></div>
+                    <div class="item">
+                        <div class="stat-icon"><i class="fa-solid fa-star"></i></div>
+                        <div>
+                            <div class="fw-bold fs-5 mb-0"><?= $stat['value']; ?></div>
+                            <small class="text-white-75"><?= $stat['label']; ?></small>
+                        </div>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -67,49 +61,132 @@ include __DIR__ . '/includes/header.php';
 
 <section class="py-5">
     <div class="container">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <div>
-                <p class="text-uppercase text-primary fw-bold label-pill mb-2">Programlar</p>
-                <h2 class="section-title mb-0">Toplumsal etki yaratan odak alanlarımız</h2>
-            </div>
-            <a class="btn btn-outline-primary" href="about.php">Detaylı İncele</a>
-        </div>
         <div class="row g-4">
-            <?php foreach ($siteData['programs'] as $program): ?>
-                <div class="col-md-6 col-lg-3">
-                    <div class="card h-100 card-hover border-0 shadow-sm">
-                        <div class="card-body">
-                            <div class="icon-circle mb-3"><i class="fa-solid <?= $program['icon']; ?>"></i></div>
-                            <h5 class="fw-bold mb-2"><?= $program['title']; ?></h5>
-                            <p class="text-muted mb-0"><?= $program['description']; ?></p>
+            <div class="col-lg-4">
+                <div class="card-sleek h-100">
+                    <div class="d-flex align-items-center gap-3 mb-3">
+                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=400&q=80" class="rounded-circle" width="70" height="70" alt="Kurucu">
+                        <div>
+                            <div class="fw-bold">Dernek Kurucu</div>
+                            <div class="text-muted small">Projelerden sorumlu yönetici</div>
+                        </div>
+                    </div>
+                    <p class="mb-3">“Koşulsuz sevgi ve dayanışma ile daha yaşanabilir bir toplum inşa ediyoruz.”</p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <span class="badge bg-light text-dark">Vizyon</span>
+                        <span class="badge bg-light text-dark">Şeffaflık</span>
+                        <span class="badge bg-light text-dark">Katılımcılık</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card-sleek h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <p class="label-pill mb-1"><i class="fa-solid fa-bell"></i> Güncel içerikler</p>
+                            <h2 class="section-title mb-0">Duyurular · Haberler · Etkinlikler</h2>
+                        </div>
+                        <a class="btn btn-outline-primary" href="news.php">Tümü</a>
+                    </div>
+                    <ul class="nav nav-pills news-tabs mb-3" id="contentTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="news-tab" data-bs-toggle="pill" data-bs-target="#news" type="button" role="tab">Haberler</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="events-tab" data-bs-toggle="pill" data-bs-target="#events" type="button" role="tab">Etkinlikler</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="testimonials-tab" data-bs-toggle="pill" data-bs-target="#testimonials" type="button" role="tab">Referanslar</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="contentTabsContent">
+                        <div class="tab-pane fade show active" id="news" role="tabpanel">
+                            <?php foreach (array_slice($siteData['news'], 0, 3) as $news): ?>
+                                <div class="d-flex align-items-start py-2 border-bottom">
+                                    <div class="icon-circle me-3"><i class="fa-regular fa-newspaper"></i></div>
+                                    <div>
+                                        <div class="small text-muted mb-1"><?= date('d.m.Y', strtotime($news['date'])); ?></div>
+                                        <div class="fw-semibold mb-1"><?= $news['title']; ?></div>
+                                        <div class="text-muted small"><?= $news['summary']; ?></div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="tab-pane fade" id="events" role="tabpanel">
+                            <?php foreach (array_slice($siteData['events'], 0, 3) as $event): ?>
+                                <div class="d-flex align-items-start py-2 border-bottom">
+                                    <div class="icon-circle me-3"><i class="fa-regular fa-calendar"></i></div>
+                                    <div>
+                                        <div class="small text-muted mb-1"><?= date('d.m.Y', strtotime($event['date'])); ?> · <?= $event['location']; ?></div>
+                                        <div class="fw-semibold mb-1"><?= $event['title']; ?></div>
+                                        <div class="text-muted small"><?= $event['summary']; ?></div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="tab-pane fade" id="testimonials" role="tabpanel">
+                            <?php foreach ($siteData['testimonials'] as $testimonial): ?>
+                                <div class="d-flex align-items-start py-2 border-bottom">
+                                    <div class="icon-circle me-3"><i class="fa-solid fa-quote-left"></i></div>
+                                    <div>
+                                        <div class="fw-semibold mb-1"><?= $testimonial['name']; ?> · <span class="text-muted"><?= $testimonial['role']; ?></span></div>
+                                        <div class="text-muted small fst-italic">“<?= $testimonial['quote']; ?>”</div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            </div>
         </div>
     </div>
 </section>
 
 <section class="py-5 bg-white">
     <div class="container">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <p class="label-pill mb-2"><i class="fa-solid fa-layer-group"></i> Odak Alanlarımız</p>
+                <h2 class="section-title mb-0">Programlar ve projeler</h2>
+            </div>
+            <a class="btn btn-outline-primary" href="about.php">Detaylı İncele</a>
+        </div>
+        <div class="row g-4">
+            <?php foreach ($siteData['programs'] as $program): ?>
+                <div class="col-md-6 col-lg-3">
+                    <div class="card-sleek h-100 card-hover text-center">
+                        <div class="icon-circle mx-auto mb-3"><i class="fa-solid <?= $program['icon']; ?>"></i></div>
+                        <h5 class="fw-bold mb-2"><?= $program['title']; ?></h5>
+                        <p class="text-muted mb-0"><?= $program['description']; ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
         <div class="row g-4 align-items-center">
             <div class="col-lg-6">
-                <p class="text-uppercase text-primary fw-bold label-pill mb-2">Bağış Akışı</p>
-                <h2 class="section-title mb-3">Şeffaf bağış süreçleri ve etkisi ölçülen projeler</h2>
-                <p class="text-muted">PHP + MySQL altyapımız bağışların kaydedilmesini, raporlanmasını ve phpMyAdmin üzerinden izlenmesini sağlar. Paylaşımlı hosting uyumlu yapı sayesinde ek sunucu erişimine gerek kalmadan kurulumu tamamlayabilirsiniz.</p>
-                <ul class="list-unstyled text-muted">
-                    <li class="mb-2"><i class="fa-solid fa-circle-check text-primary me-2"></i>SSL uyumlu ve responsif tasarım</li>
-                    <li class="mb-2"><i class="fa-solid fa-circle-check text-primary me-2"></i>Örnek SQL şeması ile hızlı başlangıç</li>
-                    <li class="mb-2"><i class="fa-solid fa-circle-check text-primary me-2"></i>Etkinlik, haber ve mesaj tabloları hazır</li>
-                </ul>
+                <div class="card-sleek h-100">
+                    <p class="label-pill mb-2"><i class="fa-solid fa-hand-holding-heart"></i> Bağış akışı</p>
+                    <h2 class="section-title mb-3">İhtiyaç sahiplerine hızlı ulaşan bağışlar</h2>
+                    <p class="text-muted">PDO tabanlı formlar bağışları ve iletişim taleplerini otomatik olarak veritabanına kaydeder. Yönetim panelinden geçmiş kayıtları inceleyip dışa aktarabilirsiniz.</p>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-primary me-2"></i>SSL uyumlu Bootstrap form yapısı</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-primary me-2"></i>phpMyAdmin ile anlık kontrol</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-check text-primary me-2"></i>Admin panelinden yayınlama ve düzenleme</li>
+                    </ul>
+                </div>
             </div>
             <div class="col-lg-6">
-                <div class="donate-card p-4 p-lg-5 shadow-lg">
+                <div class="card-sleek h-100">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="icon-circle bg-white text-primary me-3"><i class="fa-solid fa-hand-holding-heart"></i></div>
+                        <div class="icon-circle me-3"><i class="fa-solid fa-credit-card"></i></div>
                         <div>
-                            <div class="fw-semibold">Anında katkı</div>
-                            <small class="text-white-50">Bağış formu + otomatik kayıt</small>
+                            <div class="fw-semibold">Online Bağış</div>
+                            <div class="text-muted small">Dakikalar içinde formu doldur, kaydedilsin.</div>
                         </div>
                     </div>
                     <form class="row g-3" action="donate.php" method="get">
@@ -121,72 +198,48 @@ include __DIR__ . '/includes/header.php';
                             </div>
                         </div>
                         <div class="col-md-4 d-flex align-items-end">
-                            <button class="btn btn-warning w-100" type="submit">Devam Et</button>
+                            <button class="btn btn-primary w-100" type="submit">Devam Et</button>
                         </div>
                     </form>
-                    <div class="mt-4 small text-white-50">
-                        <i class="fa-solid fa-lock me-2"></i>Veriler SSL ve PDO ile güvenli aktarılır.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="py-5">
-    <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <p class="text-uppercase text-primary fw-bold label-pill mb-2">Etkinlik Takvimi</p>
-                <h2 class="section-title mb-0">Yaklaşan buluşma ve çalıştaylar</h2>
-            </div>
-            <a class="btn btn-outline-primary" href="events.php">Tüm etkinlikler</a>
-        </div>
-        <div class="row g-4">
-            <?php foreach ($siteData['events'] as $event): ?>
-                <div class="col-lg-4">
-                    <div class="card h-100 card-hover border-0 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center text-muted small mb-2">
-                                <i class="fa-regular fa-calendar me-2"></i>
-                                <span><?= date('d M Y', strtotime($event['date'])); ?> · <?= $event['location']; ?></span>
+                    <div class="border-top mt-3 pt-3">
+                        <div class="d-flex align-items-start gap-3">
+                            <div class="icon-circle"><i class="fa-solid fa-envelope-open-text"></i></div>
+                            <div>
+                                <div class="fw-semibold">İletişim Talepleri</div>
+                                <div class="text-muted small">Form kayıtlarını panelden inceleyin, yanıtlayın.</div>
                             </div>
-                            <h5 class="fw-bold mb-2"><?= $event['title']; ?></h5>
-                            <p class="text-muted mb-3"><?= $event['summary']; ?></p>
-                            <a class="text-primary fw-semibold" href="events.php"><span>Detaylar</span> <i class="fa-solid fa-arrow-right-long ms-1"></i></a>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            </div>
         </div>
     </div>
 </section>
 
 <section class="py-5 bg-white">
     <div class="container">
-        <div class="row g-4 align-items-center">
-            <div class="col-lg-5">
-                <p class="text-uppercase text-primary fw-bold label-pill mb-2">Öne çıkanlar</p>
-                <h2 class="section-title mb-3">Haberler ve başarı hikâyeleri</h2>
-                <p class="text-muted">Veritabanındaki haber tabloları sayesinde ekip kolayca yeni duyurular ekler, ziyaretçiler aradıklarını hızla bulur.</p>
-                <a class="btn btn-outline-primary" href="news.php">Tüm haberler</a>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <p class="label-pill mb-2"><i class="fa-solid fa-image"></i> Galeri</p>
+                <h2 class="section-title mb-0">Fotoğraflar ve videolar</h2>
             </div>
-            <div class="col-lg-7">
-                <div class="row g-3">
-                    <?php foreach (array_slice($siteData['news'], 0, 3) as $news): ?>
-                        <div class="col-md-12">
-                            <div class="card card-hover border-0 shadow-sm h-100">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center text-muted small mb-2">
-                                        <i class="fa-regular fa-newspaper me-2"></i>
-                                        <span><?= date('d M Y', strtotime($news['date'])); ?> · <?= $news['author']; ?></span>
-                                    </div>
-                                    <h5 class="fw-bold mb-2"><?= $news['title']; ?></h5>
-                                    <p class="text-muted mb-0"><?= $news['summary']; ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
+            <a class="btn btn-outline-primary" href="events.php">Galeriye Git</a>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="gallery-card">
+                    <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1400&q=80" alt="Toplantı">
+                    <span class="badge bg-primary">Foto Galeri</span>
+                </div>
+            </div>
+            <div class="col-lg-4 d-flex flex-column gap-4">
+                <div class="gallery-card">
+                    <img src="https://images.unsplash.com/photo-1529333166433-0f3f7e2b2f77?auto=format&fit=crop&w=800&q=80" alt="Video">
+                    <span class="badge bg-danger"><i class="fa-solid fa-play"></i> Video</span>
+                </div>
+                <div class="gallery-card">
+                    <img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=800&q=80" alt="Saha çalışması">
+                    <span class="badge bg-primary">Saha Çalışması</span>
                 </div>
             </div>
         </div>
@@ -195,34 +248,27 @@ include __DIR__ . '/includes/header.php';
 
 <section class="py-5">
     <div class="container">
-        <div class="row g-4">
+        <div class="row g-4 align-items-center">
             <div class="col-lg-6">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body">
-                        <p class="text-uppercase text-primary fw-bold label-pill mb-2">Ekip & Destekçiler</p>
-                        <h2 class="section-title mb-3">Birlikte büyüyen topluluk</h2>
-                        <p class="text-muted">Partner logoları, gönüllü hikâyeleri ve destekçi referansları tek sayfada toplanır. Tasarım tamamen Bootstrap 5 ve özel CSS ile düzenlenmiştir.</p>
-                        <div class="d-flex flex-wrap gap-2 mt-3">
-                            <?php foreach ($siteData['partners'] as $partner): ?>
-                                <span class="partner-tag"><?= $partner; ?></span>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
+                <p class="label-pill mb-2"><i class="fa-solid fa-handshake"></i> İş Ortakları</p>
+                <h2 class="section-title mb-3">Güvenilir sponsor ve destekçiler</h2>
+                <p class="text-muted">Programlarımızı güçlendiren kurum ve markalarla sürdürülebilir iş birlikleri yürütüyoruz.</p>
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                    <?php foreach ($siteData['partners'] as $partner): ?>
+                        <span class="badge bg-light text-dark px-3 py-2 fw-semibold"><?= $partner; ?></span>
+                    <?php endforeach; ?>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="card h-100 border-0 shadow-sm">
-                    <div class="card-body">
-                        <p class="text-uppercase text-primary fw-bold label-pill mb-2">Deneyimler</p>
-                        <h2 class="section-title mb-3">Gönüllüler ne diyor?</h2>
-                        <div class="d-flex flex-column gap-3">
-                            <?php foreach ($siteData['testimonials'] as $testimonial): ?>
-                                <div class="testimonial">
-                                    <p class="mb-2 fst-italic">“<?= $testimonial['quote']; ?>”</p>
-                                    <div class="fw-semibold mb-0"><?= $testimonial['name']; ?> · <span class="text-muted"><?= $testimonial['role']; ?></span></div>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
+                <p class="label-pill mb-2"><i class="fa-solid fa-comments"></i> Referanslar</p>
+                <div class="card-sleek h-100">
+                    <div class="d-flex flex-column gap-3">
+                        <?php foreach ($siteData['testimonials'] as $testimonial): ?>
+                            <div>
+                                <div class="fw-semibold mb-1"><?= $testimonial['name']; ?> <span class="text-muted">· <?= $testimonial['role']; ?></span></div>
+                                <div class="text-muted fst-italic">“<?= $testimonial['quote']; ?>”</div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>

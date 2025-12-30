@@ -1,35 +1,54 @@
-<footer class="bg-dark text-white pt-5 pb-4 mt-auto">
+<footer class="footer pt-5 pb-4">
     <div class="container">
         <div class="row g-4">
-            <div class="col-md-4">
-                <h5 class="fw-bold">DernekWeb</h5>
-                <p class="text-white-50">Toplumsal dayanışmayı güçlendiren, ölçülebilir etki yaratan projeler yürütüyoruz.</p>
+            <div class="col-md-3">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="brand-mark me-2"><i class="fa-solid fa-hand-holding-heart"></i></span>
+                    <div class="fw-bold text-white">DernekWeb</div>
+                </div>
+                <p class="mb-3">Dayanışma projelerimizi şeffaf raporlar ve güvenli bağış altyapısıyla destekliyoruz.</p>
+                <div class="d-flex gap-3">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
             </div>
-            <div class="col-md-4">
-                <h6 class="fw-bold">Hızlı Bağlantılar</h6>
-                <ul class="list-unstyled text-white-50">
-                    <li><a class="text-white-50 text-decoration-none" href="about.php">Hakkımızda</a></li>
-                    <li><a class="text-white-50 text-decoration-none" href="events.php">Etkinlikler</a></li>
-                    <li><a class="text-white-50 text-decoration-none" href="donate.php">Bağış</a></li>
-                    <li><a class="text-white-50 text-decoration-none" href="contact.php">İletişim</a></li>
+            <div class="col-md-3">
+                <h6 class="fw-bold mb-3">Kurumsal</h6>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><a href="about.php">Hakkımızda</a></li>
+                    <li class="mb-2"><a href="events.php">Etkinlikler</a></li>
+                    <li class="mb-2"><a href="news.php">Haberler</a></li>
+                    <li class="mb-2"><a href="contact.php">İletişim</a></li>
                 </ul>
             </div>
-            <div class="col-md-4">
-                <h6 class="fw-bold">Bülten</h6>
-                <p class="text-white-50">E-posta bültenine katılın, projelerden haberdar olun.</p>
-                <form class="d-flex gap-2" action="#" method="post">
-                    <input type="email" class="form-control" placeholder="E-posta adresiniz" required>
-                    <button class="btn btn-primary" type="submit">Gönder</button>
-                </form>
+            <div class="col-md-3">
+                <h6 class="fw-bold mb-3">Hızlı İşlemler</h6>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2"><a href="donate.php">Online Bağış</a></li>
+                    <li class="mb-2"><a href="contact.php">Destek Talebi</a></li>
+                    <li class="mb-2"><a href="admin/login.php">Yönetim Paneli</a></li>
+                    <li class="mb-2"><a href="#">Bülten Üyeliği</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h6 class="fw-bold mb-3">İletişim</h6>
+                <p class="mb-1"><i class="fa-solid fa-location-dot me-2"></i>Mustafa Kemal Mah. İstanbul</p>
+                <p class="mb-1"><i class="fa-solid fa-phone me-2"></i>+90 312 123 45 67</p>
+                <p class="mb-3"><i class="fa-solid fa-envelope me-2"></i>destek@dernekweb.com</p>
+                <div class="d-flex gap-2">
+                    <span class="badge bg-light text-dark">KVKK</span>
+                    <span class="badge bg-light text-dark">Açık Rıza</span>
+                    <span class="badge bg-light text-dark">Gizlilik</span>
+                </div>
             </div>
         </div>
-        <hr class="border-light border-opacity-10 my-4">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center text-white-50 small">
-            <span>© <?= date('Y'); ?> DernekWeb. Tüm hakları saklıdır.</span>
-            <div class="d-flex gap-3">
-                <a class="text-white-50" href="#"><i class="fab fa-instagram"></i></a>
-                <a class="text-white-50" href="#"><i class="fab fa-linkedin"></i></a>
-                <a class="text-white-50" href="#"><i class="fab fa-facebook"></i></a>
+        <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center text-white-50 small mt-4">
+            <span>© <?= date('Y'); ?> DernekWeb · Tüm hakları saklıdır.</span>
+            <div class="d-flex gap-3 align-items-center">
+                <span class="small">Paylaşımlı hosting uyumlu</span>
+                <span class="small">MySQL + phpMyAdmin hazır</span>
             </div>
         </div>
     </div>
