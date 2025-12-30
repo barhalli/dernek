@@ -9,6 +9,7 @@ function load_data(?PDO $pdo = null): array
 
     try {
         return [
+            'settings' => fetch_settings($pdo) ?: $fallback['settings'],
             'stats' => fetch_stats($pdo) ?: $fallback['stats'],
             'programs' => fetch_programs($pdo) ?: $fallback['programs'],
             'events' => fetch_events($pdo) ?: $fallback['events'],
@@ -19,6 +20,17 @@ function load_data(?PDO $pdo = null): array
     } catch (Throwable $exception) {
         return $fallback;
     }
+}
+
+function fetch_settings(PDO $pdo): array
+{
+    $stmt = $pdo->query('SELECT setting_key, setting_value FROM site_settings');
+    $raw = $stmt->fetchAll();
+    $settings = [];
+    foreach ($raw as $row) {
+        $settings[$row['setting_key']] = $row['setting_value'];
+    }
+    return $settings;
 }
 
 function fetch_stats(PDO $pdo): array
@@ -35,14 +47,34 @@ function fetch_programs(PDO $pdo): array
 
 function fetch_events(PDO $pdo): array
 {
-    $stmt = $pdo->query('SELECT title, event_date AS date, location, summary FROM events ORDER BY event_date ASC');
+    $stmt = $pdo->query('SELECT id, title, slug, event_date AS date, location, summary, cover_image, details, cta_label, cta_link FROM events ORDER BY event_date ASC');
     return $stmt->fetchAll();
 }
 
 function fetch_news(PDO $pdo): array
 {
-    $stmt = $pdo->query('SELECT title, published_at AS date, author, summary, content FROM news ORDER BY published_at DESC');
+    $stmt = $pdo->query('SELECT id, title, slug, published_at AS date, author, category, summary, content, cover_image FROM news ORDER BY published_at DESC');
     return $stmt->fetchAll();
+}
+
+function find_event(array $events, string $slug): ?array
+{
+    foreach ($events as $event) {
+        if (($event['slug'] ?? '') === $slug) {
+            return $event;
+        }
+    }
+    return null;
+}
+
+function find_news(array $news, string $slug): ?array
+{
+    foreach ($news as $article) {
+        if (($article['slug'] ?? '') === $slug) {
+            return $article;
+        }
+    }
+    return null;
 }
 
 function fetch_testimonials(PDO $pdo): array

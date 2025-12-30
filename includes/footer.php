@@ -1,3 +1,4 @@
+<?php $settings = $siteData['settings'] ?? []; ?>
 <footer class="footer pt-5 pb-4">
     <div class="container">
         <div class="row g-4">
@@ -34,9 +35,9 @@
             </div>
             <div class="col-md-3">
                 <h6 class="fw-bold mb-3">İletişim</h6>
-                <p class="mb-1"><i class="fa-solid fa-location-dot me-2"></i>Mustafa Kemal Mah. İstanbul</p>
-                <p class="mb-1"><i class="fa-solid fa-phone me-2"></i>+90 312 123 45 67</p>
-                <p class="mb-3"><i class="fa-solid fa-envelope me-2"></i>destek@dernekweb.com</p>
+                <p class="mb-1"><i class="fa-solid fa-location-dot me-2"></i><?= sanitize($settings['info_address'] ?? 'İstanbul, Türkiye'); ?></p>
+                <p class="mb-1"><i class="fa-solid fa-phone me-2"></i><?= sanitize($settings['info_phone'] ?? '+90 312 123 45 67'); ?></p>
+                <p class="mb-3"><i class="fa-solid fa-envelope me-2"></i><?= sanitize($settings['info_email'] ?? 'destek@dernekweb.com'); ?></p>
                 <div class="d-flex gap-2">
                     <span class="badge bg-light text-dark">KVKK</span>
                     <span class="badge bg-light text-dark">Açık Rıza</span>

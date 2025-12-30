@@ -5,6 +5,7 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../includes/functions.php';
 
 $siteData = load_data($pdo);
+$settings = $siteData['settings'] ?? [];
 
 $adminSettings = $settings['admin'] ?? [
     'user' => 'admin',

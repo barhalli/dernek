@@ -7,22 +7,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $action = $_POST['action'] ?? '';
         if ($action === 'create') {
-            $stmt = $pdo->prepare('INSERT INTO events (title, event_date, location, summary) VALUES (:title, :event_date, :location, :summary)');
+            $stmt = $pdo->prepare('INSERT INTO events (title, slug, event_date, location, cover_image, summary, details, cta_label, cta_link) VALUES (:title, :slug, :event_date, :location, :cover_image, :summary, :details, :cta_label, :cta_link)');
             $stmt->execute([
                 ':title' => sanitize($_POST['title'] ?? ''),
+                ':slug' => sanitize($_POST['slug'] ?? ''),
                 ':event_date' => $_POST['event_date'] ?? date('Y-m-d'),
                 ':location' => sanitize($_POST['location'] ?? ''),
+                ':cover_image' => sanitize($_POST['cover_image'] ?? ''),
                 ':summary' => sanitize($_POST['summary'] ?? ''),
+                ':details' => sanitize($_POST['details'] ?? ''),
+                ':cta_label' => sanitize($_POST['cta_label'] ?? 'Kayıt Ol'),
+                ':cta_link' => sanitize($_POST['cta_link'] ?? '#'),
             ]);
             $notice = 'Etkinlik eklendi.';
         }
         if ($action === 'update') {
-            $stmt = $pdo->prepare('UPDATE events SET title = :title, event_date = :event_date, location = :location, summary = :summary WHERE id = :id');
+            $stmt = $pdo->prepare('UPDATE events SET title = :title, slug = :slug, event_date = :event_date, location = :location, cover_image = :cover_image, summary = :summary, details = :details, cta_label = :cta_label, cta_link = :cta_link WHERE id = :id');
             $stmt->execute([
                 ':title' => sanitize($_POST['title'] ?? ''),
+                ':slug' => sanitize($_POST['slug'] ?? ''),
                 ':event_date' => $_POST['event_date'] ?? date('Y-m-d'),
                 ':location' => sanitize($_POST['location'] ?? ''),
+                ':cover_image' => sanitize($_POST['cover_image'] ?? ''),
                 ':summary' => sanitize($_POST['summary'] ?? ''),
+                ':details' => sanitize($_POST['details'] ?? ''),
+                ':cta_label' => sanitize($_POST['cta_label'] ?? 'Kayıt Ol'),
+                ':cta_link' => sanitize($_POST['cta_link'] ?? '#'),
                 ':id' => (int) ($_POST['id'] ?? 0),
             ]);
             $notice = 'Etkinlik güncellendi.';
@@ -65,9 +75,29 @@ $items = $pdo ? fetch_events($pdo) : ($siteData['events'] ?? []);
                 <label class="form-label">Lokasyon</label>
                 <input type="text" name="location" class="form-control" required>
             </div>
+            <div class="col-md-4">
+                <label class="form-label">Slug</label>
+                <input type="text" name="slug" class="form-control" placeholder="ornek-etkinlik" required>
+            </div>
+            <div class="col-md-8">
+                <label class="form-label">Kapak Görseli (URL)</label>
+                <input type="url" name="cover_image" class="form-control" placeholder="https://cdn..." required>
+            </div>
             <div class="col-md-12">
                 <label class="form-label">Özet</label>
                 <textarea name="summary" class="form-control" rows="2" required></textarea>
+            </div>
+            <div class="col-md-12">
+                <label class="form-label">Detay</label>
+                <textarea name="details" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">CTA Başlığı</label>
+                <input type="text" name="cta_label" class="form-control" value="Kayıt Ol" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">CTA Link</label>
+                <input type="url" name="cta_link" class="form-control" value="#" required>
             </div>
             <div class="col-12">
                 <button class="btn btn-primary" type="submit">Kaydet</button>
@@ -93,13 +123,18 @@ $items = $pdo ? fetch_events($pdo) : ($siteData['events'] ?? []);
                                 <form method="post" class="row g-2 align-items-center">
                                     <input type="hidden" name="action" value="update">
                                     <input type="hidden" name="id" value="<?= $item['id'] ?? 0; ?>">
-                                    <div class="col-md-3"><input type="text" name="title" class="form-control form-control-sm" value="<?= sanitize($item['title']); ?>" required></div>
+                                    <div class="col-md-2"><input type="text" name="title" class="form-control form-control-sm" value="<?= sanitize($item['title']); ?>" required></div>
+                                    <div class="col-md-2"><input type="text" name="slug" class="form-control form-control-sm" value="<?= sanitize($item['slug'] ?? ''); ?>" required></div>
                                     <div class="col-md-2"><input type="date" name="event_date" class="form-control form-control-sm" value="<?= isset($item['date']) ? sanitize($item['date']) : sanitize($item['event_date']); ?>" required></div>
                                     <div class="col-md-2"><input type="text" name="location" class="form-control form-control-sm" value="<?= sanitize($item['location']); ?>" required></div>
-                                    <div class="col-md-3"><input type="text" name="summary" class="form-control form-control-sm" value="<?= sanitize($item['summary']); ?>" required></div>
+                                    <div class="col-md-2"><input type="text" name="cta_label" class="form-control form-control-sm" value="<?= sanitize($item['cta_label'] ?? 'Kayıt Ol'); ?>" required></div>
                                     <div class="col-md-2 d-flex gap-2">
                                         <button class="btn btn-sm btn-outline-primary" type="submit">Kaydet</button>
                                     </div>
+                                    <div class="col-md-4 mt-2"><input type="url" name="cover_image" class="form-control form-control-sm" value="<?= sanitize($item['cover_image'] ?? ''); ?>" placeholder="Kapak görseli" required></div>
+                                    <div class="col-md-4 mt-2"><input type="url" name="cta_link" class="form-control form-control-sm" value="<?= sanitize($item['cta_link'] ?? '#'); ?>" placeholder="Kayıt linki" required></div>
+                                    <div class="col-md-4 mt-2"><input type="text" name="summary" class="form-control form-control-sm" value="<?= sanitize($item['summary']); ?>" placeholder="Özet" required></div>
+                                    <div class="col-12 mt-2"><textarea name="details" class="form-control form-control-sm" rows="2" placeholder="Detay" required><?= sanitize($item['details'] ?? ''); ?></textarea></div>
                                 </form>
                                 <form method="post" class="mt-2" onsubmit="return confirm('Silmek istediğinize emin misiniz?');">
                                     <input type="hidden" name="action" value="delete">

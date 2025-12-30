@@ -38,6 +38,7 @@ require_login();
             <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'testimonials') ? ' active' : ''; ?>" href="/admin/testimonials.php"><i class="fa-solid fa-comments me-2"></i>Referanslar</a>
             <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'partners') ? ' active' : ''; ?>" href="/admin/partners.php"><i class="fa-solid fa-handshake me-2"></i>İş Ortakları</a>
             <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'messages') ? ' active' : ''; ?>" href="/admin/messages.php"><i class="fa-solid fa-envelope-open-text me-2"></i>Form Kayıtları</a>
+            <a class="nav-link<?php echo str_contains($_SERVER['REQUEST_URI'], 'settings') ? ' active' : ''; ?>" href="/admin/settings.php"><i class="fa-solid fa-gear me-2"></i>Site Ayarları</a>
         </nav>
         <div class="mt-auto">
             <a class="btn btn-outline-light w-100" href="/admin/logout.php"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>Çıkış Yap</a>

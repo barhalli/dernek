@@ -23,9 +23,9 @@ include __DIR__ . '/includes/header.php';
                     <div class="card h-100 card-hover border-0 shadow-sm position-relative">
                         <div class="card-body">
                             <div class="text-muted small mb-2"><i class="fa-regular fa-calendar me-2"></i><?= date('d M Y', strtotime($event['date'])); ?> · <?= $event['location']; ?></div>
-                            <h5 class="fw-bold mb-2"><?= $event['title']; ?></h5>
+                            <h5 class="fw-bold mb-2"><a class="text-decoration-none" href="event.php?slug=<?= urlencode($event['slug'] ?? ''); ?>"><?= $event['title']; ?></a></h5>
                             <p class="text-muted mb-3"><?= $event['summary']; ?></p>
-                            <a class="btn btn-outline-primary btn-sm" href="contact.php">Katılmak istiyorum</a>
+                            <a class="btn btn-outline-primary btn-sm" href="event.php?slug=<?= urlencode($event['slug'] ?? ''); ?>">Detayları Gör</a>
                         </div>
                     </div>
                 </div>

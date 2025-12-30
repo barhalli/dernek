@@ -211,6 +211,17 @@ a { text-decoration: none; }
     left: 12px;
 }
 
+.featured-event {
+    background: linear-gradient(135deg, #0c2340 0%, #1d3557 45%, #10243d 100%);
+    color: #fff;
+}
+
+.featured-event .section-title { color: #fff; }
+
+.featured-event .event-widget { border: 1px solid rgba(255,255,255,0.08); }
+
+.event-agenda li { margin-bottom: .5rem; color: #526581; }
+
 .footer {
     background: #0b1c37;
     color: #cbd5e1;

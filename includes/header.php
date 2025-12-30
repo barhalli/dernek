@@ -1,15 +1,17 @@
+<?php $settings = $siteData['settings'] ?? []; ?>
 <div class="topbar d-none d-lg-block">
     <div class="container d-flex justify-content-between align-items-center py-2 small">
         <div class="d-flex align-items-center gap-3 text-white-50">
-            <span><i class="fa-solid fa-phone me-1"></i> +90 312 123 45 67</span>
-            <span><i class="fa-solid fa-envelope me-1"></i> info@dernekweb.com</span>
-            <span><i class="fa-solid fa-location-dot me-1"></i> Ankara, Türkiye</span>
+            <span><i class="fa-solid fa-bullhorn me-1"></i> <?= sanitize($settings['topbar_note'] ?? 'Şeffaflık ve güven ile 18 ilde aktifiz.'); ?></span>
+            <span><i class="fa-solid fa-phone me-1"></i> <?= sanitize($settings['info_phone'] ?? '+90 312 123 45 67'); ?></span>
+            <span><i class="fa-solid fa-envelope me-1"></i> <?= sanitize($settings['info_email'] ?? 'info@dernekweb.com'); ?></span>
+            <span><i class="fa-solid fa-location-dot me-1"></i> <?= sanitize($settings['info_address'] ?? 'Ankara, Türkiye'); ?></span>
         </div>
         <div class="d-flex align-items-center gap-3">
-            <a class="text-white" href="#"><i class="fa-brands fa-facebook-f"></i></a>
-            <a class="text-white" href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a class="text-white" href="#"><i class="fa-brands fa-x-twitter"></i></a>
-            <a class="text-white" href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a class="text-white" href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a class="text-white" href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a class="text-white" href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+            <a class="text-white" href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
         </div>
     </div>
 </div>
@@ -30,7 +32,7 @@
                 <li class="nav-item"><a class="nav-link" href="news.php">HABERLER</a></li>
                 <li class="nav-item"><a class="nav-link" href="donate.php">BAĞIŞ</a></li>
                 <li class="nav-item"><a class="nav-link" href="contact.php">İLETİŞİM</a></li>
-                <li class="nav-item"><a class="btn btn-primary nav-cta" href="donate.php">Hızlı Bağış</a></li>
+                <li class="nav-item"><a class="btn btn-primary nav-cta" href="<?= sanitize($settings['hero_primary_link'] ?? 'donate.php'); ?>"><?= sanitize($settings['hero_primary_cta'] ?? 'Hızlı Bağış'); ?></a></li>
             </ul>
         </div>
     </div>

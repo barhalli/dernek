@@ -26,9 +26,9 @@ include __DIR__ . '/includes/header.php';
                                 <i class="fa-regular fa-calendar me-2"></i>
                                 <span><?= date('d M Y', strtotime($article['date'])); ?> · <?= $article['author']; ?></span>
                             </div>
-                            <h5 class="fw-bold mb-2"><?= $article['title']; ?></h5>
-                            <p class="text-muted"><?= $article['summary']; ?></p>
-                            <p class="text-muted small mb-0"><?= $article['content']; ?></p>
+                            <h5 class="fw-bold mb-2"><a class="text-decoration-none" href="news-detail.php?slug=<?= urlencode($article['slug'] ?? ''); ?>"><?= $article['title']; ?></a></h5>
+                            <p class="text-muted mb-2"><?= $article['summary']; ?></p>
+                            <a class="text-primary fw-semibold small" href="news-detail.php?slug=<?= urlencode($article['slug'] ?? ''); ?>">Devamını oku</a>
                         </div>
                     </div>
                 </div>

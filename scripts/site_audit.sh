@@ -18,9 +18,9 @@ fi
 
 # Page presence check
 required_pages=(
-  "index.php" "about.php" "contact.php" "donate.php" "events.php" "news.php"
+  "index.php" "about.php" "contact.php" "donate.php" "events.php" "news.php" "event.php" "news-detail.php"
   "admin/index.php" "admin/login.php" "admin/dashboard.php"
-  "admin/stats.php" "admin/programs.php" "admin/events.php" "admin/news.php"
+  "admin/stats.php" "admin/programs.php" "admin/events.php" "admin/news.php" "admin/settings.php"
   "admin/testimonials.php" "admin/partners.php" "admin/messages.php"
 )
 

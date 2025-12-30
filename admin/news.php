@@ -7,22 +7,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $action = $_POST['action'] ?? '';
         if ($action === 'create') {
-            $stmt = $pdo->prepare('INSERT INTO news (title, summary, content, author, published_at) VALUES (:title, :summary, :content, :author, :published_at)');
+            $stmt = $pdo->prepare('INSERT INTO news (title, slug, summary, content, cover_image, category, author, published_at) VALUES (:title, :slug, :summary, :content, :cover_image, :category, :author, :published_at)');
             $stmt->execute([
                 ':title' => sanitize($_POST['title'] ?? ''),
+                ':slug' => sanitize($_POST['slug'] ?? ''),
                 ':summary' => sanitize($_POST['summary'] ?? ''),
                 ':content' => sanitize($_POST['content'] ?? ''),
+                ':cover_image' => sanitize($_POST['cover_image'] ?? ''),
+                ':category' => sanitize($_POST['category'] ?? 'Genel'),
                 ':author' => sanitize($_POST['author'] ?? 'Editör'),
                 ':published_at' => $_POST['published_at'] ?? date('Y-m-d'),
             ]);
             $notice = 'Haber eklendi.';
         }
         if ($action === 'update') {
-            $stmt = $pdo->prepare('UPDATE news SET title = :title, summary = :summary, content = :content, author = :author, published_at = :published_at WHERE id = :id');
+            $stmt = $pdo->prepare('UPDATE news SET title = :title, slug = :slug, summary = :summary, content = :content, cover_image = :cover_image, category = :category, author = :author, published_at = :published_at WHERE id = :id');
             $stmt->execute([
                 ':title' => sanitize($_POST['title'] ?? ''),
+                ':slug' => sanitize($_POST['slug'] ?? ''),
                 ':summary' => sanitize($_POST['summary'] ?? ''),
                 ':content' => sanitize($_POST['content'] ?? ''),
+                ':cover_image' => sanitize($_POST['cover_image'] ?? ''),
+                ':category' => sanitize($_POST['category'] ?? 'Genel'),
                 ':author' => sanitize($_POST['author'] ?? 'Editör'),
                 ':published_at' => $_POST['published_at'] ?? date('Y-m-d'),
                 ':id' => (int) ($_POST['id'] ?? 0),
@@ -64,8 +70,20 @@ $items = $pdo ? fetch_news($pdo) : ($siteData['news'] ?? []);
                 <input type="date" name="published_at" class="form-control" value="<?= date('Y-m-d'); ?>" required>
             </div>
             <div class="col-md-6">
+                <label class="form-label">Slug (detay URL)</label>
+                <input type="text" name="slug" class="form-control" placeholder="ornek-haber" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Kapak Görseli (URL)</label>
+                <input type="url" name="cover_image" class="form-control" placeholder="https://cdn..." required>
+            </div>
+            <div class="col-md-6">
                 <label class="form-label">Özet</label>
                 <textarea name="summary" class="form-control" rows="2" required></textarea>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Kategori</label>
+                <input type="text" name="category" class="form-control" value="Genel" required>
             </div>
             <div class="col-md-6">
                 <label class="form-label">Yazar</label>
@@ -97,9 +115,21 @@ $items = $pdo ? fetch_news($pdo) : ($siteData['news'] ?? []);
                         <label class="form-label">Yayın Tarihi</label>
                         <input type="date" name="published_at" class="form-control" value="<?= date('Y-m-d', strtotime($item['date'] ?? $item['published_at'])); ?>" required>
                     </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Slug</label>
+                        <input type="text" name="slug" class="form-control" value="<?= sanitize($item['slug'] ?? ''); ?>" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Kapak Görseli</label>
+                        <input type="url" name="cover_image" class="form-control" value="<?= sanitize($item['cover_image'] ?? ''); ?>" required>
+                    </div>
                     <div class="col-md-6">
                         <label class="form-label">Özet</label>
                         <textarea name="summary" class="form-control" rows="2" required><?= sanitize($item['summary']); ?></textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Kategori</label>
+                        <input type="text" name="category" class="form-control" value="<?= sanitize($item['category'] ?? 'Genel'); ?>" required>
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">Yazar</label>
