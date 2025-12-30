@@ -1,0 +1,132 @@
+:root {
+    --primary: #1b6dc1;
+    --accent: #ffd166;
+    --dark: #0f172a;
+    --muted: #6c757d;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f8fafc;
+    color: #1f2937;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-brand {
+    letter-spacing: 0.5px;
+}
+
+.hero {
+    background: linear-gradient(135deg, rgba(27, 109, 193, 0.92), rgba(15, 23, 42, 0.92)), url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero .badge {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.hero-curve {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+}
+
+.section-title {
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.icon-circle {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    background: rgba(27, 109, 193, 0.08);
+    color: var(--primary);
+    border-radius: 12px;
+}
+
+.card-hover {
+    transition: all 0.2s ease-in-out;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.testimonial {
+    border-left: 4px solid var(--accent);
+    background: #fff;
+    border-radius: 14px;
+    padding: 18px 20px;
+}
+
+.donate-card {
+    background: linear-gradient(135deg, #1b6dc1, #0f172a);
+    color: #fff;
+    border-radius: 20px;
+}
+
+.partner-tag {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.event-timeline {
+    border-left: 2px solid #e5e7eb;
+    padding-left: 20px;
+}
+
+.event-timeline .dot {
+    width: 12px;
+    height: 12px;
+    background: var(--primary);
+    border-radius: 50%;
+    position: absolute;
+    left: -7px;
+    top: 8px;
+}
+
+.page-hero {
+    background: linear-gradient(120deg, rgba(27, 109, 193, 0.25), rgba(15, 23, 42, 0.5));
+    color: #0f172a;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.contact-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    padding: 24px;
+}
+
+.label-pill {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
